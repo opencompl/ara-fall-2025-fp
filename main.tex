@@ -107,7 +107,7 @@ that converts floating point operations into fixed-width operations.
 % methodologies is paramount for the economic viability and safe deployment of
 % advanced hardware.
 
-\subsubsection{The Rise of Custom Low-Precision Arithmetic}
+\paragraph{The Rise of Custom Low-Precision Arithmetic}
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
 utilize custom, low-precision floating point formats, such as 8-bit (FP8) and
@@ -121,8 +121,8 @@ precise, formal semantics and reasoning techniques tailored to their specific
 behaviours. Effectively applying bit-blasting techniques (a common strategy in
 SMT solvers for converting arithmetic problems into boolean satisfiability)
 benefits formally verified translations from these
-low-precision semantics to Boolean logic.
-Our work addresses this emerging need by providing mechanized semantics for FP8/FP4 and developing verified
+low-precision semantics to SAT queries.
+Our work addresses this need by providing mechanized semantics for FP8/FP4 and developing verified
 bit-blasting procedures.
 
 % \subsubsection{Our Contribution: Mechanized and Certified Reasoning for Key Hardware Primitives}
@@ -141,22 +141,24 @@ bit-blasting procedures.
 Our preliminary work provides the essential building blocks for the proposed
 research, focusing on high-assurance foundations for hardware verification
 using formal methods in Lean.
-
 We have made significant contributions to the Lean bitvector library,
-implementing the core circuits necessary for bitblasting. This includes adding
-support for the SMT-LIB draft standard, including overflow flags, and
+implementing the core circuits necessary for bitblasting fixed-width bitvector operations.
+This includes adding support for the SMT-LIB draft standard, including overflow flags, and
 implementing efficient overflow detection circuits \cite{gok2001efficient}.
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
-4-bit (FP4). These custom formats, used in modern deep learning accelerators,
+4-bit (FP4) \cite{fplean}. These custom formats, used in modern deep learning accelerators,
 deviate from the standard IEEE-754 and require precise formal semantics
 \cite{micikevicius2022fp8, kim2025investigation}.
-Our work \cite{fplean} includes mechanizing these semantics
-and developing a verified bit-blasting engine that systematically translates
+Our preliminary work includes mechanizing these semantics
+and developing an \emph{unverified} bitblasting engine that systematically translates
 FP8/FP4 operations into SAT.
-While we have a working library, we now aim to verify its correctness end-to-end,
-beyond simply performing testing against known-good implementations.
+We have tested that this engine produces the correct floating point encodings by
+performing a golden test against known-good software floating point implementations.
 
+While this provides a working library, it is not certified correct;
+We now aim to verify its correctness end-to-end,
+beyond simply performing testing against known-good implementations.
 
 \section{Methods}
 
