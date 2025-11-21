@@ -110,7 +110,7 @@ that converts floating point operations into fixed-width operations.
 \subsubsection{The Rise of Custom Low-Precision Arithmetic}
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
-utilize custom, low-precision floating-point formats, such as 8-bit (FP8) and
+utilize custom, low-precision floating point formats, such as 8-bit (FP8) and
 4-bit (FP4)~\cite{micikevicius2022fp8, kim2025investigation}. These formats
 deviate from the well-established IEEE-754 standard, offering significant gains
 in computational throughput and energy efficiency at the cost of numerical
@@ -134,7 +134,7 @@ bit-blasting procedures.
 % (WP1), reflexive tactics for core model checking algorithms (WP2), verified
 % checkers for industry-standard proof certificates long with novel
 % certificate formats (WP3), and a comprehensive framework for verifying
-% low-precision floating-point hardware (WP4).
+% low-precision floating point hardware (WP4).
 
 \paragraph{Our Preliminary Work.}
 
@@ -160,7 +160,7 @@ beyond simply performing testing against known-good implementations.
 
 \section{Methods}
 
-Our methodology is to extend our new floating-point library in Lean \cite{fplean}
+Our methodology is to extend our new floating point library in Lean \cite{fplean}
 that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
 This will enable us to create ``mixin'' floating point types that provide or omit these features.
 Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
@@ -297,6 +297,6 @@ Tobias Grosser will lead the project, overseeing the research direction and ensu
 %     % \ganttmilestone{WP4 \& Project Completion}{36}
 % \end{ganttchart}
 % 
-% Our project timeline is carefully designed to ensure proper dependencies and allow for iterative development within the Lean ecosystem. \textbf{WP1} (months 1-12) establishes the foundational bitvector reasoning capabilities, with core functionality delivered by month 8. \textbf{WP2} (months 6-20) begins once WP1's preliminary infrastructure is available, developing reflexive model checking tactics. \textbf{WP3} (months 15-30) leverages the mature foundations from WP1 and WP2 to build verified certificate checkers. \textbf{WP4} (months 18-36) focuses on the specialized domain of low-precision floating-point verification. The staggered approach accommodates the inherent engineering challenges of working with cutting-edge proof assistant technology while ensuring sufficient overlap for knowledge transfer and iterative refinement.
+% Our project timeline is carefully designed to ensure proper dependencies and allow for iterative development within the Lean ecosystem. \textbf{WP1} (months 1-12) establishes the foundational bitvector reasoning capabilities, with core functionality delivered by month 8. \textbf{WP2} (months 6-20) begins once WP1's preliminary infrastructure is available, developing reflexive model checking tactics. \textbf{WP3} (months 15-30) leverages the mature foundations from WP1 and WP2 to build verified certificate checkers. \textbf{WP4} (months 18-36) focuses on the specialized domain of low-precision floating point verification. The staggered approach accommodates the inherent engineering challenges of working with cutting-edge proof assistant technology while ensuring sufficient overlap for knowledge transfer and iterative refinement.
 % 
 \end{document}
