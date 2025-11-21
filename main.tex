@@ -1,0 +1,231 @@
+% https://www.amazon.science/_attachment/ara-proposal-template-2025?id=00000195-aa14-ddc9-ad95-fef5abb90000
+\documentclass[onecolumn]{article}
+\usepackage[a4paper, total={7in, 8in}]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgfgantt}
+% \usepackage[authoryear]{natbib}
+
+\usepackage[style=verbose-note,backend=bibtex,maxcitenames=1]{biblatex}
+\DeclareNameAlias{sortname}{given-family}
+\DeclareNameAlias{default}{given-family}
+\renewcommand*{\bibinitdelim}{\addnbthinspace}
+\addbibresource{references.bib}
+
+% \bibliographystyle{plainnat}
+\usepackage[english]{babel}
+% redefine \cite to put citations in footnotes
+\let\oldcite\cite
+\renewcommand{\cite}[1]{\footnote{\oldcite{#1}}}
+\newcommand{\citep}{\parencite}
+
+\hypersetup{
+    colorlinks = true, % Enable colored links
+    linkcolor  = blue!70!white, % Internal links (e.g., cross-references)
+    citecolor  = red!70!white,  % Citations
+    urlcolor   = blue!70!white  % External URLs
+}
+
+% https://stackoverflow.com/a/4974583/5305365
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+
+
+\begin{document}
+
+\newcommand{\bvdecide}{\texttt{bv\_decide}}
+\newcommand{\qfbv}{\texttt{QF\_BV}}
+\newcommand{\LIA}{\texttt{LIA}}
+\newcommand{\Z}{\ensuremath{\mathbb Z}}
+\newcommand{\euf}{\ensuremath{\texttt{EUF}}}
+
+\definecolor{almostwhite}{HTML}{efefef}
+
+
+\title{Toward Certified Machine Learning with Fast, Mechanized Algorithms for Floating Point Verification}
+% {Lead: Tobias Grosser, University of Cambridge}}
+\date{\vspace{-5ex}}
+\maketitle{}
+% https://www.amazon.science/_attachment/ara-proposal-template-2025?id=00000195-aa14-ddc9-ad95-fef5abb90000
+
+\section{Principal Investigators}
+
+\begin{itemize}
+  \item{PI} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
+  \item{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
+  \item Cash Funding Needed: £300,000
+  \item AWS Promotional Credits needed: £50,000
+  \item Amazon contact: Jim Grundy, \texttt{jmgruj@amazon.com}
+\end{itemize}
+
+\section{Abstract}
+
+
+    To mechanize precise, machine-checked definitions of FP8 and
+    FP4 in Lean, capturing bit layouts, rounding modes, special values, and
+    conversion functions, and implement a new, layered, IEEE784 compliant
+    floating-point library. This enables one to develop a formally verified bit-blasting engine in
+    Lean that systematically translates FP8/FP4 operations into Boolean
+    constraints, proving logical equivalence to high-level semantics, and
+    incorporating abstraction/refinement strategies.
+    Furthermore, this bitblasting pipeline allows one to mechanize parameterized
+    circuit designs for high-performance FP8/FP4
+    arithmetic in Lean and prove their behavioral equivalence to the semantic
+    model, which yields end-to-end verified hardware modules for the bit-blasting
+    pipeline.
+
+
+\section{Introduction}
+
+\subsubsection{The Critical Need for Trustworthy Hardware Verification} Modern
+digital hardware systems, ranging from microprocessors in consumer devices to
+specialized accelerators for machine learning and safety-critical control
+systems in automotive or aerospace applications, exhibit extraordinary
+complexity. Designing and fabricating this hardware is an immensely expensive
+undertaking, involving intricate design flows and costly manufacturing
+processes. Errors detected late in the design cycle, or worse,
+post-fabrication, can lead to catastrophic financial losses, significant delays
+in time-to-market, and potential failures in safety-critical scenarios,
+jeopardizing lives and infrastructure. Consequently,
+rigorous and \emph{trustworthy} verification is not merely beneficial but
+absolutely essential. It provides the necessary confidence that a design
+behaves according to its specification before committing to the irreversible
+and expensive step of manufacturing silicon. High assurance in verification
+methodologies is paramount for the economic viability and safe deployment of
+advanced hardware.
+
+\subsubsection{The Rise of Custom Low-Precision Arithmetic}
+The rapid growth of machine learning and high-performance
+computing has spurred the development of specialized hardware accelerators that
+utilize custom, low-precision floating-point formats, such as 8-bit (FP8) and
+4-bit (FP4)~\cite{micikevicius2022fp8, kim2025investigation}. These formats
+deviate from the well-established IEEE-754 standard, offering significant gains
+in computational throughput and energy efficiency at the cost of numerical
+precision and introducing subtle semantic variations (e.g., in handling
+rounding, exponent bias, NaNs, and infinities). Verifying designs incorporating
+these novel arithmetic types presents a significant challenge, requiring
+precise, formal semantics and reasoning techniques tailored to their specific
+behaviours. Effectively applying bit-blasting techniques (a common strategy in
+SMT solvers for converting arithmetic problems into boolean satisfiability)
+benefits formally verified translations from these
+low-precision semantics to Boolean logic.
+Our work addresses this emerging need by providing mechanized semantics for FP8/FP4 and developing verified
+bit-blasting procedures.
+
+% \subsubsection{Our Contribution: Mechanized and Certified Reasoning for Key Hardware Primitives}
+% This project confronts these key challenges by systematically developing fast,
+% \emph{mechanized}, and \emph{formally verified} algorithms, data structures,
+% and tools within the Lean 4 proof assistant. We aim to build high-assurance
+% foundations for finite domain reasoning, directly applicable to hardware model
+% checking. Our contributions include verified SMT-based bitvector reasoning
+% (WP1), reflexive tactics for core model checking algorithms (WP2), verified
+% checkers for industry-standard proof certificates long with novel
+% certificate formats (WP3), and a comprehensive framework for verifying
+% low-precision floating-point hardware (WP4).
+
+\paragraph{Our Preliminary Work.}
+
+Our preliminary work provides the essential building blocks for the proposed
+research, focusing on high-assurance foundations for hardware verification
+using formal methods in Lean.
+
+We have made significant contributions to the Lean bitvector library,
+implementing the core circuits necessary for bitblasting. This includes adding
+support for the SMT-LIB draft standard, including overflow flags, and
+implementing efficient overflow detection circuits \cite{gok2001efficient}.
+We are developing a formally verified floating point bitblasting
+library for Lean, targeting low-precision formats such as 8-bit (FP8) and
+4-bit (FP4). These custom formats, used in modern deep learning accelerators,
+deviate from the standard IEEE-754 and require precise formal semantics
+\cite{micikevicius2022fp8, kim2025investigation}. Our work includes mechanizing these semantics
+and developing a verified bit-blasting engine that systematically translates
+FP8/FP4 operations into SAT.
+Furthermore, we are developing solvers for bitwidth-generalization in Lean.
+We develop width-independent decision procedures based on
+encoding bitvector problems to finite automata. This exploits connections
+between boolean circuits and finite state transducers.
+We build proof automation for parametric bitvectors,
+forming a cornerstone for our reflexive tactics in model checking.
+
+This body of preliminary work in mechanizing bitvector reasoning,
+floating-point semantics, and algorithmic decision procedures within Lean
+establishes our expertise and lays a solid groundwork for tackling the
+ambitious goals of this project.
+
+\section{Methods}
+
+Recent deep-learning accelerators adopt ultra-low-precision formats such as
+8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
+energy efficiency \cite{micikevicius2022fp8}. Unlike standard IEEE-754
+types, these custom formats (e.g.\ NVIDIA’s E4M3/E5M2 and the new FP4 variants)
+encode exponent bias, mantissa length, and NaN/infinity representations
+differently, leading to subtle semantic differences across hardware platforms
+\cite{kim2025investigation}. To support sound verification, we will
+mechanize precise, machine-checked definitions of FP8 and FP4 in our proof
+assistant, capturing bit layouts, rounding modes, special values, and
+conversion functions.
+
+Our methodology is to implement a new floating-point library in Lean,
+that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
+This will enable us to create ``mixin'' floating point types that provide or omit these features.
+Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
+monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}
+
+Bit-blasting reduces high-level arithmetic to Boolean formulas for SAT/SMT
+solvers, but correctness of this translation is essential to trust verification
+outcomes. While abstraction-driven bit-blasting scales to large bit-widths,
+the tiny state spaces of FP8 and FP4 enable exhaustive enumeration of all
+bit-patterns. We will develop a formally verified bit-blasting engine in
+Lean that systematically translates each FP8/FP4 operation into Boolean
+constraints and proves logical equivalence to the high-level semantics.
+
+Concretely, we will specify bit-vector layouts for FP8/FP4 and implement
+translation routines that generate SAT/SMT formulas encoding sign, exponent,
+and mantissa manipulations. For each operation—such as addition or
+multiplication—we will prove a correspondence lemma stating that the Boolean
+formula is satisfiable exactly when the intended FP relation holds. We will
+also incorporate abstraction/refinement strategies
+to prune the search space when full enumeration is unnecessary.
+
+\section{Expected Results}
+
+
+\section{Funds Needed}
+
+% \newpage
+% \appendix
+% \section*{Appendix: Project Timeline}
+% 
+% \begin{ganttchart}[
+%     hgrid,
+%     vgrid,
+%     x unit=0.38cm,
+%     y unit title=1cm,
+%     y unit chart=1cm,
+%     time slot format=simple,
+%     group/.append style={fill=almostwhite},
+%     group peaks height=0,
+%     bar/.append style={fill=black!30!white, draw=none},
+%     group/.append style={fill=black!30!white, draw=none},
+%     bar label font=\footnotesize\sffamily,
+%     group label font=\footnotesize\sffamily,
+%     milestone label font=\footnotesize\sffamily,
+%     title label font=\footnotesize\sffamily,
+%   ]{1}{36}
+% 
+%    \gantttitle{Project Timeline (36 months)}{36} \\
+%     \gantttitlelist{1,...,36}{1} \\
+%     \ganttbar{WP1 (Finite Domain Reasoning)}{1}{12} \\
+%     \ganttbar{WP2 (Reflexive Model Checking)}{6}{20} \\
+%     \ganttbar{WP3 (Certificate Checkers)}{15}{30} \\
+%     \ganttbar{WP4 (FP8/FP4 Verification)}{18}{36}
+%     % \ganttmilestone{WP1 Done}{8} \\
+%     % \ganttmilestone{WP2 Done}{16} \\
+%     % \ganttmilestone{WP3 Done}{26} \\
+%     % \ganttmilestone{WP4 \& Project Completion}{36}
+% \end{ganttchart}
+% 
+% Our project timeline is carefully designed to ensure proper dependencies and allow for iterative development within the Lean ecosystem. \textbf{WP1} (months 1-12) establishes the foundational bitvector reasoning capabilities, with core functionality delivered by month 8. \textbf{WP2} (months 6-20) begins once WP1's preliminary infrastructure is available, developing reflexive model checking tactics. \textbf{WP3} (months 15-30) leverages the mature foundations from WP1 and WP2 to build verified certificate checkers. \textbf{WP4} (months 18-36) focuses on the specialized domain of low-precision floating-point verification. The staggered approach accommodates the inherent engineering challenges of working with cutting-edge proof assistant technology while ensuring sufficient overlap for knowledge transfer and iterative refinement.
+% 
+\end{document}

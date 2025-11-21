@@ -1,0 +1,21 @@
+name: Push copy to private repo
+
+permissions: write-all
+
+on: [push]
+
+jobs:
+  push-to-repo:
+    if: github.repository == 'opencompl/paper-template'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        token: ${{ secrets.TEMPLATE_PRIVATE_REPO }}
+
+    - name: Push to private paper repository
+      run: |
+        echo ${{ github.repository }}
+        git remote add private https://oauth2:${{ secrets.TEMPLATE_PRIVATE_REPO }}@github.com/opencompl/paper-template-private.git
+        git push -f private HEAD:main
