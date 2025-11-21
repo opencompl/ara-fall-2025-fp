@@ -162,11 +162,9 @@ beyond simply performing testing against known-good implementations.
 
 \section{Methods}
 
-Our methodology is to extend our new floating point library in Lean \cite{fplean}
-that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
-This will enable us to create ``mixin'' floating point types that provide or omit these features.
-Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
-monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}.
+Our methodology is to extend our new floating point library in Lean
+with end-to-end proofs of correctness for the bitblasting pipeline.
+This involves four main components:
 
 \paragraph{Mechanization of Fixed-Point Arithmetic.}
 A key component of our approach is the mechanization of fixed-point arithmetic in Lean.
@@ -202,12 +200,12 @@ This will enable end-to-end verification of floating point benchmarks in SMT-LIB
 using our verified floating point bitblasting pipeline,
 as well as invoking floating point reasoning directly from Lean.
 
-\paragraph{Floating Point Rewrites from Bitwuzla}
+\paragraph{(Stretch Goal) Floating Point Rewrites from Bitwuzla}
 
 Next, to strengthen our bitblasting pipeline, we will incorporate
 floating point rewrite rules from Bitwuzla into our bitblaster.
 
-\paragraph{Counterexample Guided Lazy Unfolding}
+\paragraph{(Stretch Goal) Counterexample Guided Lazy Unfolding}
 
 As a stretch goal, we will explore integrating counterexample-guided lazy unfolding
 techniques into our floating point bitblaster. This should make our bitblaster
