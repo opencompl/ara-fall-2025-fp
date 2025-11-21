@@ -164,11 +164,39 @@ This will enable us to create ``mixin'' floating point types that provide or omi
 Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
 monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}.
 
+\paragraph{Mechanization of Fixed-Point Arithmetic.}
+A key component of our approach is the mechanization of fixed-point arithmetic in Lean.
+Lean has begun to develop a theory of dyadic rationals (numbers of the form $n/2^k$ for integers $n,k$),
+which serve as the mathematical foundation for fixed-point representations.
+We will build on this theory to define fixed-point operations for all IEEE-754 operations,
+including division and square root.
+Furthmore, development is necessary to define rounding modes correctly,
+and to get a representation of floating point rounding modes in terms of fixed point.
+
+\paragraph{Verified Circuits for Fixed-Point Arithmetic.}
+Building on the existing bitvector library in Lean,
+we will mechanize the circuits that encode fixed-point arithmetic as bit-vectors.
+A reduced instruction set of fixed-point operations will be mechanized,
+including addition, subtraction, multiplication, and division.
+Each operation will be accompanied by proofs of correctness,
+showing that the bitvector circuit correctly implements the fixed-point semantics.
+
+\paragraph{Reduction from Floating Point to Fixed Point.}
+Following the SymFPU approach \cite{symfpu},
+we will mechanize the floating point semantics as a preprocessor that handles 
+NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
+to fixed-point operations. 
+Following this, we will use the mechanization of fixed-point arithmetic to complete the bitblasting pipeline.
+The most complex operations, such as division and square root,
+will require careful handling to prove correctness.
+
+
 Siddharth Bhat has experience implementing floating point arithmetic in Lean,
 as well as mechanizing bitblasting algorithms for fixed point in Lean.
 He has led the development of the floating point library \cite{fplean},
 which serves as the foundation for this project.
 He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
+
 
 
 
