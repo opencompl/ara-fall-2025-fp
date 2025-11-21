@@ -59,11 +59,11 @@
 \section{Principal Investigators}
 
 \begin{itemize}
-  \item{PI} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
-  \item{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
-  \item Cash Funding Needed: \lies{£136,000}
-  \item AWS Promotional Credits needed: \lies{\$255,500}
-  \item Amazon contact: Daniel Kroenig, \lies{\texttt{XXXXXX@amazon.com}}
+  \item \textbf{PI:} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
+  \item \textbf{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
+  \item \textbf{Cash Funding Needed:} \lies{£136,000}
+  \item \textbf{AWS Promotional Credits needed:} \lies{\$255,500}
+  \item \textbf{Amazon contact:} Daniel Kroenig, \lies{\texttt{XXXXXX@amazon.com}}
 \end{itemize}
 
 \section{Abstract}
@@ -202,7 +202,7 @@ as well as invoking floating point reasoning directly from Lean.
 
 \paragraph{Floating Point Rewrites from Bitwuzla}
 
-Nect, to strengthen our bitblasting pipeline, we will incorporate
+Next, to strengthen our bitblasting pipeline, we will incorporate
 floating point rewrite rules from Bitwuzla into our bitblaster.
 
 \paragraph{Counterexample Guided Lazy Unfolding}
@@ -237,10 +237,10 @@ but rather only bitblast those that are necessary to eliminate a particular coun
 \section{Expected Results}
 
 We expect to have a formalization comprising of the following components:
-(a) First, a mechanization of fixed point arithmetic, build on top of the dyadic rational 
+(a) First, a mechanization of fixed point arithmetic, built on top of the dyadic rational 
 theory that is being built in Lean core. (b) A mechanization of the circuits that encode 
 fixed-point arithmetic in bit-vectors, building on our existing bitvector library.
-(c) A mechanization of the reuduction from floating point to fixed point arithmetic,
+(c) A mechanization of the reduction from floating point to fixed point arithmetic,
 following the SymFPU approach \cite{symfpu}. 
 (d) An integration of all of these components, giving an end-to-end verified
 floating point bitblasting pipeline for FP8 and FP4.
