@@ -34,6 +34,7 @@
 
 \begin{document}
 
+\newcommand{\fplean}{\texttt{fp.lean}}
 \newcommand{\bvdecide}{\texttt{bv\_decide}}
 \newcommand{\qfbv}{\texttt{QF\_BV}}
 \newcommand{\LIA}{\texttt{LIA}}
@@ -55,8 +56,8 @@
 \begin{itemize}
   \item{PI} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
   \item{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
-  \item Cash Funding Needed: £320,000
-  \item AWS Promotional Credits needed: £50,000
+  \item Cash Funding Needed: £120,000
+  \item AWS Promotional Credits needed: \$255,500
   \item Amazon contact: Daniel Kroenig, \texttt{XXXXXX@amazon.com}
 \end{itemize}
 
@@ -144,7 +145,8 @@ We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
 4-bit (FP4). These custom formats, used in modern deep learning accelerators,
 deviate from the standard IEEE-754 and require precise formal semantics
-\cite{micikevicius2022fp8, kim2025investigation}. Our work includes mechanizing these semantics
+\cite{micikevicius2022fp8, kim2025investigation}.
+Our work \cite{fplean} includes mechanizing these semantics
 and developing a verified bit-blasting engine that systematically translates
 FP8/FP4 operations into SAT.
 While we have a working library, we now aim to verify its correctness end-to-end,
@@ -157,7 +159,15 @@ Our methodology is to extend our new floating-point library in Lean \cite{fplean
 that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
 This will enable us to create ``mixin'' floating point types that provide or omit these features.
 Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
-monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}
+monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}.
+
+Siddharth Bhat has experience implementing floating point arithmetic in Lean,
+as well as mechanizing bitblasting algorithms for fixed point in Lean.
+He has led the development of the floating point library \cite{fplean},
+which serves as the foundation for this project.
+He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
+
+
 
 % Bit-blasting reduces high-level arithmetic to Boolean formulas for SAT/SMT
 % solvers, but correctness of this translation is essential to trust verification
@@ -192,8 +202,8 @@ a bitblaster for Lean, to support floating point verification using our new libr
 \section{Funds Needed}
 
 \begin{itemize}
-  \item Postdoc, 24 months, £160,000 % 40k * 2(years) * 2(uni overhead) = 160k + Δ
-  \item Postdoc, 24 months, £160,000 % 40k * 2(years) * 2(uni overhead) = 160k + Δ
+\item Postdoctoral Researcher, 12 months, £120,000 % 60k *  2(uni overhead) = 120k 
+\item EC2 compute credits for running SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
 \end{itemize}
 
 % \newpage
