@@ -47,20 +47,20 @@
 % {Lead: Tobias Grosser, University of Cambridge}}
 \date{\vspace{-5ex}}
 \maketitle{}
-% https://www.amazon.science/_attachment/ara-proposal-template-2025?id=00000195-aa14-ddc9-ad95-fef5abb90000
+% CFP: https://www.amazon.science/research-areas/latest-news/amazon-research-awards-issues-fall-2025-call-for-proposals
+% Guidance: https://www.amazon.science/_attachment/ara-proposal-template-2025?id=00000195-aa14-ddc9-ad95-fef5abb90000
 
 \section{Principal Investigators}
 
 \begin{itemize}
   \item{PI} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
   \item{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
-  \item Cash Funding Needed: £300,000
+  \item Cash Funding Needed: £320,000
   \item AWS Promotional Credits needed: £50,000
-  \item Amazon contact: Jim Grundy, \texttt{jmgruj@amazon.com}
+  \item Amazon contact: Daniel Kroenig, \texttt{XXXXXX@amazon.com}
 \end{itemize}
 
 \section{Abstract}
-
 
 Recent deep-learning accelerators adopt ultra-low-precision formats such as
 8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
@@ -74,8 +74,12 @@ assistant, capturing bit layouts, rounding modes, special values, and
 conversion functions.
 This will result in a new floating point mechanization in Lean that is IEEE-754
 compliant, along with a bitblaster that is integrated with Lean's existing
-bitvector library. Overall, this project 
-yields end-to-end verified hardware modules for the bit-blasting pipeline,
+bitvector library.
+This project will use algorithms built on SymFPU \cite{symfpu},
+a state of the art floating point bitblasting approach that is used in CVC5 as well as Bitwuzla,
+to translate floating point into fixed-point operations, followed by an encoding
+of fixed-point operations into bit-vectors.
+Overall, this project yields end-to-end verified hardware modules for the bit-blasting pipeline,
 and furthermore, the first verification of SymFPU-style floating point bitblasting,
 that converts floating point operations into fixed-width operations.
 \section{Introduction}
@@ -149,8 +153,7 @@ beyond simply performing testing against known-good implementations.
 
 \section{Methods}
 
-
-Our methodology is to extend our new floating-point library in Lean,
+Our methodology is to extend our new floating-point library in Lean \cite{fplean}
 that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
 This will enable us to create ``mixin'' floating point types that provide or omit these features.
 Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
@@ -187,6 +190,11 @@ Finally, (e) an executable extension of Leanwuzla\cite{leanwuzla},
 a bitblaster for Lean, to support floating point verification using our new library.
 
 \section{Funds Needed}
+
+\begin{itemize}
+  \item Postdoc, 24 months, £160,000 % 40k * 2(years) * 2(uni overhead) = 160k + Δ
+  \item Postdoc, 24 months, £160,000 % 40k * 2(years) * 2(uni overhead) = 160k + Δ
+\end{itemize}
 
 % \newpage
 % \appendix
