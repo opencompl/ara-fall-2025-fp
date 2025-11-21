@@ -36,6 +36,7 @@
 
 \newcommand{\fplean}{\texttt{fp.lean}}
 \newcommand{\bvdecide}{\texttt{bv\_decide}}
+\newcommand{\leanwuzla}{\texttt{leanwuzla}}
 \newcommand{\qfbv}{\texttt{QF\_BV}}
 \newcommand{\LIA}{\texttt{LIA}}
 \newcommand{\Z}{\ensuremath{\mathbb Z}}
@@ -59,8 +60,8 @@
 \begin{itemize}
   \item{PI} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
   \item{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
-  \item Cash Funding Needed: £120,000
-  \item AWS Promotional Credits needed: \$255,500
+  \item Cash Funding Needed: \lies{£120,000}
+  \item AWS Promotional Credits needed: \lies{\$255,500}
   \item Amazon contact: Daniel Kroenig, \lies{\texttt{XXXXXX@amazon.com}}
 \end{itemize}
 
@@ -190,12 +191,27 @@ Following this, we will use the mechanization of fixed-point arithmetic to compl
 The most complex operations, such as division and square root,
 will require careful handling to prove correctness.
 
+\paragraph{Integration with \bvdecide{} and \leanwuzla{}}
+Finally, we will integrate all of these components,
+writing frontends for both \bvdecide{} (Lean's bitvector SMT solving tactic) and
+\leanwuzla{} (A CLI wrapper around \bvdecide{} that consumes SMT-LIB benchmarks).
+This will enable end-to-end verification of floating point benchmarks in SMT-LIB format,
+using our verified floating point bitblasting pipeline,
+as well as invoking floating point reasoning directly from Lean.
 
-Siddharth Bhat has experience implementing floating point arithmetic in Lean,
-as well as mechanizing bitblasting algorithms for fixed point in Lean.
-He has led the development of the floating point library \cite{fplean},
-which serves as the foundation for this project.
-He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
+\paragraph{Floating Point Rewrites from Bitwuzla}
+
+Nect, to strengthen our bitblasting pipeline, we will incorporate
+floating point rewrite rules from Bitwuzla into our bitblaster.
+
+\paragraph{Counterexample Guided Lazy Unfolding}
+
+As a stretch goal, we will explore integrating counterexample-guided lazy unfolding
+techniques into our floating point bitblaster. This should make our bitblaster
+much more scalable, as it will  no longer eagerly bitblast all floating point operations,
+but rather only bitblast those that are necessary to eliminate a particular countermodel. 
+
+
 
 
 
@@ -233,11 +249,19 @@ a bitblaster for Lean, to support floating point verification using our new libr
 \section{Funds Needed}
 
 \begin{itemize}
-\item Postdoctoral Researcher, 12 months, £120,000 % 60k *  2(uni overhead) = 120k 
-\item EC2 compute credits for running SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
+\item Postdoctoral Researcher, 12 months, \lies{£120,000} % 60k *  2(uni overhead) = 120k 
+\item EC2 compute credits for SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
 \end{itemize}
 
+Siddharth Bhat has experience implementing floating point arithmetic in Lean,
+as well as mechanizing bitblasting algorithms for fixed point in Lean.
+He has led the development of the floating point library \cite{fplean},
+which serves as the foundation for this project.
+He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
+Tobias Grosser will lead the project, overseeing the research direction and ensuring integration with Lean's existing libraries.
+
 % \newpage
+
 % \appendix
 % \section*{Appendix: Project Timeline}
 % 
