@@ -62,38 +62,40 @@
 \section{Abstract}
 
 
-    To mechanize precise, machine-checked definitions of FP8 and
-    FP4 in Lean, capturing bit layouts, rounding modes, special values, and
-    conversion functions, and implement a new, layered, IEEE784 compliant
-    floating-point library. This enables one to develop a formally verified bit-blasting engine in
-    Lean that systematically translates FP8/FP4 operations into Boolean
-    constraints, proving logical equivalence to high-level semantics, and
-    incorporating abstraction/refinement strategies.
-    Furthermore, this bitblasting pipeline allows one to mechanize parameterized
-    circuit designs for high-performance FP8/FP4
-    arithmetic in Lean and prove their behavioral equivalence to the semantic
-    model, which yields end-to-end verified hardware modules for the bit-blasting
-    pipeline.
-
-
+Recent deep-learning accelerators adopt ultra-low-precision formats such as
+8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
+energy efficiency \cite{micikevicius2022fp8}. Unlike standard IEEE-754
+types, these custom formats (e.g.\ NVIDIA’s E4M3/E5M2 and the new FP4 variants)
+encode exponent bias, mantissa length, and NaN/infinity representations
+differently, leading to subtle semantic differences across hardware platforms
+\cite{kim2025investigation}. To support sound verification, we will
+mechanize precise, machine-checked definitions of FP8 and FP4 in our proof
+assistant, capturing bit layouts, rounding modes, special values, and
+conversion functions.
+This will result in a new floating point mechanization in Lean that is IEEE-754
+compliant, along with a bitblaster that is integrated with Lean's existing
+bitvector library. Overall, this project 
+yields end-to-end verified hardware modules for the bit-blasting pipeline,
+and furthermore, the first verification of SymFPU-style floating point bitblasting,
+that converts floating point operations into fixed-width operations.
 \section{Introduction}
 
-\subsubsection{The Critical Need for Trustworthy Hardware Verification} Modern
-digital hardware systems, ranging from microprocessors in consumer devices to
-specialized accelerators for machine learning and safety-critical control
-systems in automotive or aerospace applications, exhibit extraordinary
-complexity. Designing and fabricating this hardware is an immensely expensive
-undertaking, involving intricate design flows and costly manufacturing
-processes. Errors detected late in the design cycle, or worse,
-post-fabrication, can lead to catastrophic financial losses, significant delays
-in time-to-market, and potential failures in safety-critical scenarios,
-jeopardizing lives and infrastructure. Consequently,
-rigorous and \emph{trustworthy} verification is not merely beneficial but
-absolutely essential. It provides the necessary confidence that a design
-behaves according to its specification before committing to the irreversible
-and expensive step of manufacturing silicon. High assurance in verification
-methodologies is paramount for the economic viability and safe deployment of
-advanced hardware.
+% \subsubsection{The Critical Need for Trustworthy Hardware Verification} Modern
+% digital hardware systems, ranging from microprocessors in consumer devices to
+% specialized accelerators for machine learning and safety-critical control
+% systems in automotive or aerospace applications, exhibit extraordinary
+% complexity. Designing and fabricating this hardware is an immensely expensive
+% undertaking, involving intricate design flows and costly manufacturing
+% processes. Errors detected late in the design cycle, or worse,
+% post-fabrication, can lead to catastrophic financial losses, significant delays
+% in time-to-market, and potential failures in safety-critical scenarios,
+% jeopardizing lives and infrastructure. Consequently,
+% rigorous and \emph{trustworthy} verification is not merely beneficial but
+% absolutely essential. It provides the necessary confidence that a design
+% behaves according to its specification before committing to the irreversible
+% and expensive step of manufacturing silicon. High assurance in verification
+% methodologies is paramount for the economic viability and safe deployment of
+% advanced hardware.
 
 \subsubsection{The Rise of Custom Low-Precision Arithmetic}
 The rapid growth of machine learning and high-performance
@@ -141,55 +143,48 @@ deviate from the standard IEEE-754 and require precise formal semantics
 \cite{micikevicius2022fp8, kim2025investigation}. Our work includes mechanizing these semantics
 and developing a verified bit-blasting engine that systematically translates
 FP8/FP4 operations into SAT.
-Furthermore, we are developing solvers for bitwidth-generalization in Lean.
-We develop width-independent decision procedures based on
-encoding bitvector problems to finite automata. This exploits connections
-between boolean circuits and finite state transducers.
-We build proof automation for parametric bitvectors,
-forming a cornerstone for our reflexive tactics in model checking.
+While we have a working library, we now aim to verify its correctness end-to-end,
+beyond simply performing testing against known-good implementations.
 
-This body of preliminary work in mechanizing bitvector reasoning,
-floating-point semantics, and algorithmic decision procedures within Lean
-establishes our expertise and lays a solid groundwork for tackling the
-ambitious goals of this project.
 
 \section{Methods}
 
-Recent deep-learning accelerators adopt ultra-low-precision formats such as
-8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
-energy efficiency \cite{micikevicius2022fp8}. Unlike standard IEEE-754
-types, these custom formats (e.g.\ NVIDIA’s E4M3/E5M2 and the new FP4 variants)
-encode exponent bias, mantissa length, and NaN/infinity representations
-differently, leading to subtle semantic differences across hardware platforms
-\cite{kim2025investigation}. To support sound verification, we will
-mechanize precise, machine-checked definitions of FP8 and FP4 in our proof
-assistant, capturing bit layouts, rounding modes, special values, and
-conversion functions.
 
-Our methodology is to implement a new floating-point library in Lean,
+Our methodology is to extend our new floating-point library in Lean,
 that is IEEE-754 compliant, but with a layered structure enabling opt-in support for NaNs and Infinity.
 This will enable us to create ``mixin'' floating point types that provide or omit these features.
 Furthermore, each operator will be accompanied by proofs of fundamental properties—such as correct round-to-nearest behavior,
 monotonicity, and representable-range bounds—ensuring alignment with the hardware specifications \cite{micikevicius2022fp8}
 
-Bit-blasting reduces high-level arithmetic to Boolean formulas for SAT/SMT
-solvers, but correctness of this translation is essential to trust verification
-outcomes. While abstraction-driven bit-blasting scales to large bit-widths,
-the tiny state spaces of FP8 and FP4 enable exhaustive enumeration of all
-bit-patterns. We will develop a formally verified bit-blasting engine in
-Lean that systematically translates each FP8/FP4 operation into Boolean
-constraints and proves logical equivalence to the high-level semantics.
+% Bit-blasting reduces high-level arithmetic to Boolean formulas for SAT/SMT
+% solvers, but correctness of this translation is essential to trust verification
+% outcomes. While abstraction-driven bit-blasting scales to large bit-widths,
+% the tiny state spaces of FP8 and FP4 enable exhaustive enumeration of all
+% bit-patterns. We will develop a formally verified bit-blasting engine in
+% Lean that systematically translates each FP8/FP4 operation into Boolean
+% constraints and proves logical equivalence to the high-level semantics.
 
-Concretely, we will specify bit-vector layouts for FP8/FP4 and implement
-translation routines that generate SAT/SMT formulas encoding sign, exponent,
-and mantissa manipulations. For each operation—such as addition or
-multiplication—we will prove a correspondence lemma stating that the Boolean
-formula is satisfiable exactly when the intended FP relation holds. We will
-also incorporate abstraction/refinement strategies
-to prune the search space when full enumeration is unnecessary.
+% Concretely, we will specify bit-vector layouts for FP8/FP4 and implement
+% translation routines that generate SAT/SMT formulas encoding sign, exponent,
+% and mantissa manipulations. For each operation—such as addition or
+% multiplication—we will prove a correspondence lemma stating that the Boolean
+% formula is satisfiable exactly when the intended FP relation holds. We will
+% also incorporate abstraction/refinement strategies
+% to prune the search space when full enumeration is unnecessary.
+
 
 \section{Expected Results}
 
+We expect to have a formalization comprising of the following components:
+(a) First, a mechanization of fixed point arithmetic, build on top of the dyadic rational 
+theory that is being built in Lean core. (b) A mechanization of the circuits that encode 
+fixed-point arithmetic in bit-vectors, building on our existing bitvector library.
+(c) A mechanization of the reuduction from floating point to fixed point arithmetic,
+following the SymFPU approach \cite{symfpu}. 
+(d) An integration of all of these components, giving an end-to-end verified
+floating point bitblasting pipeline for FP8 and FP4.
+Finally, (e) an executable extension of Leanwuzla\cite{leanwuzla},
+a bitblaster for Lean, to support floating point verification using our new library.
 
 \section{Funds Needed}
 
