@@ -70,18 +70,18 @@
 
 Recent deep-learning accelerators adopt ultra-low-precision formats such as
 8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
-energy efficiency \cite{micikevicius2022fp8}. Unlike standard IEEE-754
+energy efficiency.\cite{micikevicius2022fp8} Unlike standard IEEE-754
 types, these custom formats (e.g.\ NVIDIA’s E4M3/E5M2 and the new FP4 variants)
 encode exponent bias, mantissa length, and NaN/infinity representations
-differently, leading to subtle semantic differences across hardware platforms
-\cite{kim2025investigation}. To support sound verification, we will
+differently, leading to subtle semantic differences across hardware platforms.\cite{kim2025investigation}
+To support sound verification, we will
 mechanize precise, machine-checked definitions of FP8 and FP4 in our proof
 assistant, capturing bit layouts, rounding modes, special values, and
 conversion functions.
 This will result in a new floating point mechanization in Lean that is IEEE-754
 compliant, along with a bitblaster that is integrated with Lean's existing
 bitvector library.
-This project will use algorithms built on SymFPU \cite{symfpu},
+This project will use algorithms built on SymFPU, \cite{symfpu}
 a state of the art floating point bitblasting approach that is used in CVC5 as well as Bitwuzla,
 to translate floating point into fixed-point operations, followed by an encoding
 of fixed-point operations into bit-vectors.
@@ -111,19 +111,30 @@ that converts floating point operations into fixed-width operations.
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
 utilize custom, low-precision floating point formats, such as 8-bit (FP8) and
-4-bit (FP4)~\cite{micikevicius2022fp8, kim2025investigation}. These formats
-deviate from the well-established IEEE-754 standard, offering significant gains
+4-bit (FP4).~\cite{micikevicius2022fp8, kim2025investigation} These formats sometimes
+deviate subtly from the well-established IEEE-754 standard, offering significant gains
 in computational throughput and energy efficiency at the cost of numerical
-precision and introducing subtle semantic variations (e.g., in handling
-rounding, exponent bias, NaNs, and infinities). Verifying designs incorporating
-these novel arithmetic types presents a significant challenge, requiring
-precise, formal semantics and reasoning techniques tailored to their specific
-behaviours. Effectively applying bit-blasting techniques (a common strategy in
-SMT solvers for converting arithmetic problems into boolean satisfiability)
-benefits formally verified translations from these
-low-precision semantics to SAT queries.
-Our work addresses this need by providing mechanized semantics for FP8/FP4 and developing verified
-bit-blasting procedures.
+precision and introducing subtle semantic variations.
+For example, the E4M3 format \cite{micikevicius2022fp8} does not represent infinities,
+and NaN values have a single bit pattern allowed.
+This allows for seven more magnitudes to be represented (256, 288, 320, 352, 384, 416, 448) compared to an IEEE-754 compliant version.
+
+Verifying designs incorporating these novel arithmetic types presents a significant challenge, requiring
+precise, formal semantics and reasoning techniques tailored to their specific behaviours.
+Effectively applying bit-blasting techniques (a common strategy in SMT solvers for converting arithmetic problems into boolean satisfiability)
+benefits formally verified translations from these low-precision semantics to SAT queries.
+Our work addresses this need by providing mechanized semantics for floating point,
+and developing verified bit-blasting procedures.
+
+
+\paragraph{Floating Point Solvers}
+Solvers for floating point have received a lot of attention,
+as they are a key component of 
+
+As proposed and predicted by \cite{cmbcbitblasting}, bitblasting floating point numbers turned out to be a viable direction,
+despite initial concerns over SAT solver scalability. 
+This approach is adopted by SymFPU \cite{symfpu}, the floating point solver that is used by CVC5 and Bitwuzla
+in order to convert floating point problems into bitblastable SAT problems.
 
 % \subsubsection{Our Contribution: Mechanized and Certified Reasoning for Key Hardware Primitives}
 % This project confronts these key challenges by systematically developing fast,
@@ -144,11 +155,11 @@ using formal methods in Lean.
 We have made significant contributions to the Lean bitvector library,
 implementing the core circuits necessary for bitblasting fixed-width bitvector operations.
 This includes adding support for the SMT-LIB draft standard, including overflow flags, and
-implementing efficient overflow detection circuits \cite{gok2001efficient}.
+implementing efficient overflow detection circuits. \cite{gok2001efficient}
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
-4-bit (FP4) \cite{fplean}. These custom formats, used in modern deep learning accelerators,
-deviate from the standard IEEE-754 and require precise formal semantics
+4-bit (FP4). \cite{fplean} These custom formats, used in modern deep learning accelerators,
+deviate from the standard IEEE-754 and require precise formal semantics.
 \cite{micikevicius2022fp8, kim2025investigation}.
 Our preliminary work includes mechanizing these semantics
 and developing an \emph{unverified} bitblasting engine that systematically translates
@@ -168,7 +179,8 @@ This involves four main components:
 
 \paragraph{Mechanization of Fixed-Point Arithmetic.}
 A key component of our approach is the mechanization of fixed-point arithmetic in Lean.
-Lean has begun to develop a theory of dyadic rationals (numbers of the form $n/2^k$ for integers $n,k$),
+Lean has begun to develop a theory of dyadic rationals, \footnote{\url{https://github.com/leanprover/lean4/blob/master/src/Init/Data/Dyadic.lean}}
+(numbers of the form $n/2^k$ for integers $n,k$)
 which serve as the mathematical foundation for fixed-point representations.
 We will build on this theory to define fixed-point operations for all IEEE-754 operations,
 including division and square root.
@@ -184,7 +196,7 @@ Each operation will be accompanied by proofs of correctness,
 showing that the bitvector circuit correctly implements the fixed-point semantics.
 
 \paragraph{Reduction from Floating Point to Fixed Point.}
-Following the SymFPU approach \cite{symfpu},
+Following the SymFPU approach, \cite{symfpu}
 we will mechanize the floating point semantics as a preprocessor that handles 
 NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
 to fixed-point operations. 
@@ -241,10 +253,10 @@ We expect to have a formalization comprising of the following components:
 theory that is being built in Lean core. (b) A mechanization of the circuits that encode 
 fixed-point arithmetic in bit-vectors, building on our existing bitvector library.
 (c) A mechanization of the reduction from floating point to fixed point arithmetic,
-following the SymFPU approach \cite{symfpu}. 
+following the SymFPU approach. \cite{symfpu}
 (d) An integration of all of these components, giving an end-to-end verified
 floating point bitblasting pipeline for FP8 and FP4.
-Finally, (e) an executable extension of Leanwuzla\cite{leanwuzla},
+Finally, (e) an executable extension of Leanwuzla,\cite{leanwuzla}
 a bitblaster for Lean, to support floating point verification using our new library.
 
 \section{Funds Needed}
@@ -256,12 +268,12 @@ a bitblaster for Lean, to support floating point verification using our new libr
 \item EC2 compute credits for SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
 \end{itemize}
 
-Siddharth Bhat has experience implementing floating point arithmetic in Lean,
-as well as mechanizing bitblasting algorithms for fixed point in Lean.
-He has led the development of the floating point library \cite{fplean},
-which serves as the foundation for this project.
-He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
-Tobias Grosser will lead the project, overseeing the research direction and ensuring integration with Lean's existing libraries.
+% Siddharth Bhat has experience implementing floating point arithmetic in Lean,
+% as well as mechanizing bitblasting algorithms for fixed point in Lean.
+% He has led the development of the floating point library, \cite{fplean}
+% which serves as the foundation for this project.
+% He will spearhead the formal verification of the bitblasting pipeline, building on SymFPU's algorithms and the \fplean{} development.
+% Tobias Grosser will lead the project, overseeing the research direction and ensuring integration with Lean's existing libraries.
 
 % \newpage
 
