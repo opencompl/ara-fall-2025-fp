@@ -117,7 +117,8 @@ in computational throughput and energy efficiency at the cost of numerical
 precision and introducing subtle semantic variations.
 For example, the E4M3 format \cite{micikevicius2022fp8} does not represent infinities,
 and NaN values have a single bit pattern allowed.
-This allows for seven more magnitudes to be represented (256, 288, 320, 352, 384, 416, 448) compared to an IEEE-754 compliant version.
+This allows for seven more magnitudes to be represented (256, 288, 320, 352, 384, 416, 448) compared to an IEEE-754 compliant version ---
+a trade off of IEEE-754 compliance for range.
 
 Verifying designs incorporating these novel arithmetic types presents a significant challenge, requiring
 precise, formal semantics and reasoning techniques tailored to their specific behaviours.
