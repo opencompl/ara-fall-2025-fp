@@ -78,7 +78,7 @@ To support sound verification, we will
 mechanize precise, machine-checked definitions of IEEE-floating point in Lean.
 This will result in a new floating point mechanization, along with a bitblaster that is integrated with Lean's existing
 bitvector library.
-This project will use algorithms built on SymFPU, \cite{symfpu}
+This project will use algorithms built on SymFPU,\cite{symfpu}
 a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
 to translate floating point into fixed-point operations,
 followed by an encoding of fixed-point operations into bit-vectors.
@@ -130,7 +130,7 @@ thereby enabling trustworthy verification of cutting-edge floating point formats
 Solvers for floating point have received a lot of attention,
 as they are a key component of hardware verification
 Floating point verification by bitblasting has proven to be effective in practice,
-with CBMC being one of the first solvers to use this technique for C model checking. \cite{cbmc} \cite{brillout2009mixed}
+with CBMC being one of the first solvers to use this technique.\cite{cbmc,brillout2009mixed}
 This approach is also adopted by SymFPU, the floating point solver that is used by CVC5 and Bitwuzla
 in order to convert floating point problems into bitblastable SAT problems.
 
@@ -153,12 +153,11 @@ research, focusing on high-assurance foundations for hardware verification
 using formal methods in Lean.
 We have made significant contributions to the Lean bitvector library,
 implementing circuits necessary for bitblasting fixed-width bitvector operations (e.g. subtraction, multiplication, division, modulo).
-We have also added support for overflow flags by mechanizing efficient overflow detection circuits. \cite{gok2001efficient}
+We have also added support for overflow flags by mechanizing efficient overflow detection circuits.\cite{gok2001efficient}
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
 4-bit (FP4).\cite{fplean} These custom formats, used in modern deep learning accelerators,
-deviate from the standard IEEE-754 and require precise formal semantics
-\cite{micikevicius2022fp8, kim2025investigation}.
+deviate from the standard IEEE-754 and require precise formal semantics.\cite{micikevicius2022fp8, kim2025investigation}
 Our preliminary work includes mechanizing these semantics
 and developing an \emph{unverified} bitblasting engine that systematically translates
 FP8/FP4 operations into SAT.
@@ -177,8 +176,7 @@ This involves four main components:
 
 \paragraph{Mechanization of Fixed-Point Arithmetic.}
 A key component of our approach is the mechanization of fixed-point arithmetic in Lean.
-Lean has begun to develop a theory of dyadic rationals, \footnote{\url{https://github.com/leanprover/lean4/blob/master/src/Init/Data/Dyadic.lean}}
-(numbers of the form $n/2^k$ for integers $n,k$)
+Lean has begun to develop a theory of dyadic rationals,\footnote{\url{https://github.com/leanprover/lean4/blob/master/src/Init/Data/Dyadic.lean}} (numbers of the form $n/2^k$ for integers $n,k$)
 which serve as the mathematical foundation for fixed-point representations.
 We will build on this theory to define fixed-point operations for all IEEE-754 operations,
 including division and square root.
@@ -194,7 +192,7 @@ Each operation will be accompanied by proofs of correctness,
 showing that the bitvector circuit correctly implements fixed-point semantics.
 
 \paragraph{Reduction from Floating Point to Fixed Point.}
-Following the SymFPU approach,\cite{symfpu}
+Following the SymFPU approach,
 we will mechanize the floating point semantics as a preprocessor that handles 
 NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
 to fixed-point operations. 
@@ -204,7 +202,7 @@ The most complex step in this stage is the careful handling of rounding, especia
 \paragraph{Integration with \bvdecide{} and \leanwuzla{}}
 Finally, we will integrate all of these components,
 writing frontends for both \bvdecide{} (Lean's bitvector SMT solving tactic) and
-\leanwuzla{} (A CLI wrapper around \bvdecide{} that consumes SMT-LIB benchmarks).
+\leanwuzla{}\cite{leanwuzla}(A CLI wrapper around \bvdecide{} that consumes SMT-LIB benchmarks).
 This will enable end-to-end verification of floating point benchmarks in SMT-LIB format,
 using our verified floating point bitblasting pipeline,
 as well as invoking floating point reasoning directly from Lean.
@@ -249,7 +247,7 @@ theory that is being built in Lean core,
 (c) a mechanization of the reduction from floating point to fixed point arithmetic, following the SymFPU approach,
 (d) an integration of all of these components, giving an end-to-end verified
 floating point bitblasting pipeline for floating point.
-Finally we will also package all of these into an executable extension of Leanwuzla \cite{leanwuzla} and a 
+Finally we will also package all of these into an executable extension of Leanwuzla and a 
 tactic extension of \bvdecide{} to enable floating point reasoning natively in Lean.
 
 \section{Funds Needed}
