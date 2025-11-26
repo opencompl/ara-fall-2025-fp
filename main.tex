@@ -106,12 +106,11 @@ and furthermore, the first end-to-end verification of a SymFPU-style floating po
 \paragraph{The Rise of Custom Low-Precision Arithmetic}
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
-utilize custom, low-precision floating point formats, such as 8-bit (FP8) and
-4-bit (FP4)~\cite{micikevicius2022fp8, kim2025investigation}. These formats sometimes
+utilize custom, low-precision floating point formats, such as FP8 \& FP4.\cite{micikevicius2022fp8, kim2025investigation} These formats sometimes
 deviate subtly from the well-established IEEE-754 standard, offering significant gains
 in computational throughput and energy efficiency at the cost of numerical
 precision and introducing subtle semantic variations.
-For example, the E4M3 format \cite{micikevicius2022fp8} does not represent infinities,
+For example, the E4M3 format does not represent infinities,\cite{micikevicius2022fp8}
 and NaN values have a single bit pattern allowed.
 This allows for seven more magnitudes to be represented (256, 288, 320, 352, 384, 416, 448) compared to an IEEE-754 compliant version ---
 a trade off of IEEE-754 compliance for range.
@@ -129,13 +128,12 @@ thereby enabling trustworthy verification of cutting-edge floating point formats
 
 \paragraph{Floating Point Solvers}
 Solvers for floating point have received a lot of attention,
-as they are a key component of hardware verification.
-As proposed and predicted by CBMC, \cite{cbmc}
-bitblasting floating point numbers turned out to be a viable direction,
-despite initial concerns over SAT solver scalability.
-This approach is adopted by SymFPU,
-the floating point solver that is used by CVC5 and Bitwuzla
+as they are a key component of hardware verification
+Floating point verification by bitblasting has proven to be effective in practice,
+with CBMC being one of the first solvers to use this technique for C model checking. \cite{cbmc} \cite{brillout2009mixed}
+This approach is also adopted by SymFPU, the floating point solver that is used by CVC5 and Bitwuzla
 in order to convert floating point problems into bitblastable SAT problems.
+
 
 % \subsubsection{Our Contribution: Mechanized and Certified Reasoning for Key Hardware Primitives}
 % This project confronts these key challenges by systematically developing fast,
@@ -158,7 +156,7 @@ implementing circuits necessary for bitblasting fixed-width bitvector operations
 We have also added support for overflow flags by mechanizing efficient overflow detection circuits. \cite{gok2001efficient}
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
-4-bit (FP4). \cite{fplean} These custom formats, used in modern deep learning accelerators,
+4-bit (FP4).\cite{fplean} These custom formats, used in modern deep learning accelerators,
 deviate from the standard IEEE-754 and require precise formal semantics
 \cite{micikevicius2022fp8, kim2025investigation}.
 Our preliminary work includes mechanizing these semantics
