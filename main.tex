@@ -194,14 +194,13 @@ we will mechanize the floating point semantics as a preprocessor that handles
 NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
 to fixed-point operations. 
 Following this, we will use the mechanization of fixed-point arithmetic to complete the bitblasting pipeline.
-The most complex step in this stage is the careful handling of rounding (e.g., division and square root need nontrivial bounding).
+The most complex step in this stage is the careful handling of rounding (e.g., division and square root needs nontrivial bounds).
 
 \paragraph{Integration with \bvdecide{} and \leanwuzla{}}
 Finally, we will integrate all of these components,
 writing frontends for both \bvdecide{} (Lean's bitvector SMT solving tactic) and
 \leanwuzla{}\cite{leanwuzla}(A CLI wrapper around \bvdecide{} that consumes SMT-LIB benchmarks).
-This enables end-to-end verification of floating point benchmarks both in the SMT-LIB format, as well as within Lean
-using our verified floating point bitblasting pipeline.
+This enables end-to-end verification of floating point benchmarks both in the SMT-LIB format, as well as within Lean itself.
 
 % \paragraph{(Stretch Goal) Floating Point Rewrites from Bitwuzla}
 % Next, to strengthen our bitblasting pipeline, we will incorporate
