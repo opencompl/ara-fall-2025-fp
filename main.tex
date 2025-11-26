@@ -107,7 +107,7 @@ and furthermore, the first end-to-end verification of a SymFPU-style floating po
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
 utilize custom, low-precision floating point formats, such as 8-bit (FP8) and
-4-bit (FP4).~\cite{micikevicius2022fp8, kim2025investigation} These formats sometimes
+4-bit (FP4)~\cite{micikevicius2022fp8, kim2025investigation}. These formats sometimes
 deviate subtly from the well-established IEEE-754 standard, offering significant gains
 in computational throughput and energy efficiency at the cost of numerical
 precision and introducing subtle semantic variations.
@@ -154,9 +154,8 @@ Our preliminary work provides the essential building blocks for the proposed
 research, focusing on high-assurance foundations for hardware verification
 using formal methods in Lean.
 We have made significant contributions to the Lean bitvector library,
-implementing the core circuits necessary for bitblasting fixed-width bitvector operations.
-This includes adding support for the SMT-LIB draft standard, including overflow flags, and
-implementing efficient overflow detection circuits. \cite{gok2001efficient}
+implementing circuits necessary for bitblasting fixed-width bitvector operations (e.g. subtraction, multiplication, division, modulo).
+We have also added support for overflow flags by mechanizing efficient overflow detection circuits. \cite{gok2001efficient}
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
 4-bit (FP4). \cite{fplean} These custom formats, used in modern deep learning accelerators,
@@ -197,7 +196,7 @@ Each operation will be accompanied by proofs of correctness,
 showing that the bitvector circuit correctly implements fixed-point semantics.
 
 \paragraph{Reduction from Floating Point to Fixed Point.}
-Following the SymFPU approach, \cite{symfpu}
+Following the SymFPU approach,\cite{symfpu}
 we will mechanize the floating point semantics as a preprocessor that handles 
 NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
 to fixed-point operations. 
@@ -246,13 +245,13 @@ as well as invoking floating point reasoning directly from Lean.
 \section{Expected Results}
 
 We expect to have a formalization comprising of the following components:
-(a) A mechanization of fixed point arithmetic, built on top of the dyadic rational 
-theory that is being built in Lean core.
-(b) A mechanization of fixed-point arithmetic circuits in bit-vectors, building on Lean's existing bitvector library.
-(c) A mechanization of the reduction from floating point to fixed point arithmetic, following the SymFPU approach.
-(d) An integration of all of these components, giving an end-to-end verified
+(a) a mechanization of fixed point arithmetic, built on top of the dyadic rational 
+theory that is being built in Lean core,
+(b) a mechanization of fixed-point arithmetic circuits in bit-vectors, building on Lean's existing bitvector library,
+(c) a mechanization of the reduction from floating point to fixed point arithmetic, following the SymFPU approach,
+(d) an integration of all of these components, giving an end-to-end verified
 floating point bitblasting pipeline for floating point.
-Finally, (e) an executable extension of Leanwuzla \cite{leanwuzla} and a 
+Finally we will also package all of these into an executable extension of Leanwuzla \cite{leanwuzla} and a 
 tactic extension of \bvdecide{} to enable floating point reasoning natively in Lean.
 
 \section{Funds Needed}
