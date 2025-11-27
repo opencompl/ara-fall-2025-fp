@@ -159,9 +159,8 @@ implementing circuits necessary for bitblasting fixed-width bitvector operations
 We have also added support for overflow flags by mechanizing efficient overflow detection circuits~\cite{gok2001efficient}.
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 4-bit (FP4) and
-8-bit (FP8)~\cite{fplean}. These custom formats, used in modern deep learning accelerators,
-deviate from the standard IEEE-754 and require precise formal semantics~\cite{micikevicius2022fp8, kim2025investigation}.
-Our preliminary work includes mechanizing these semantics
+8-bit (FP8)~\cite{fplean}. 
+Our preliminary work includes mechanizing the IEEE-754 semantics
 and developing an \emph{unverified} bitblasting engine that systematically translates
 FP4/FP8 operations into SAT.
 We have tested that this engine produces the correct floating point encodings by
@@ -172,6 +171,10 @@ While this provides a working library, it is not certified correct;
 We now aim to verify its correctness end-to-end,
 beyond simply performing testing against known-good implementations.
 
+Furthermore, our library is developed with consideration for future support of custom floating point formats.
+The core library consists of the mechanization of floating point to fixed-point simulation.
+The NaN and infinity semantics are thin wrappers around the core fixed-point simulation,
+which permits future modification to support custom formats that deviate from the IEEE-754 standard~\cite{micikevicius2022fp8, kim2025investigation}.
 \section{Methods}
 
 Our methodology is to extend our new floating point library in Lean
@@ -253,6 +256,22 @@ Finally we will also package all of these into an executable extension of \leanw
 tactic extension of \bvdecide{} to enable floating point reasoning natively in Lean.
 
 \section{Impact on Amazon Science}
+
+Amazon's Inferentia Chip supports FP16, BF16, and INT8 data types and the latest
+Inferentia2 adds support for FP32, TF32, and the new configurable FP8 (cFP8)
+data type to provide developers more flexibility to optimize performance and
+accuracy. Furthemore,  AWS Neuron takes high-precision FP32 models and
+automatically casts them to lower-precision data types while optimizing accuracy
+and performance. Support for modeling this reasoning about these diverse sets of 
+floating point formats paired wit
+
+
+% \includegraphics{images/image.png}
+
+Inferentia's cFP8 allows configuratable exponent and mantissa ranges,
+which precisely matches the design of our library, where our proofs are 
+
+parametric over the choice of exponent and mantissa sizes.
 
 
 
