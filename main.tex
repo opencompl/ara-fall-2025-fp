@@ -74,11 +74,11 @@ Recent deep-learning accelerators adopt ultra-low-precision formats such as
 energy efficiency.\cite{micikevicius2022fp8} Unlike standard IEEE-754
 types, these custom formats (e.g., NVIDIA’s E4M3/E5M2 and the new FP4 variants)
 encode exponent bias, mantissa length, and NaN/infinity representations
-differently, leading to subtle semantic differences across hardware platforms.\cite{kim2025investigation}To support sound verification, we will
+differently, leading to subtle semantic differences across hardware platforms.\cite{kim2025investigation} To support sound verification, we will
 mechanize precise, machine-checked definitions of IEEE-floating point in Lean.
 This will result in a new floating point mechanization, along with a bitblaster that is integrated with Lean's existing
 bitvector library.
-This project will use algorithms built on SymFPU,\cite{symfpu}a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
+This project will use algorithms built on SymFPU,\cite{symfpu} a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
 to translate floating point into fixed-point operations,
 followed by an encoding of fixed-point operations into bit-vectors.
 Overall, this project yields an end-to-end verified solver for the floating point bit-blasting pipeline,
