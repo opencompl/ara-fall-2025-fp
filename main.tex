@@ -78,7 +78,7 @@ differently, leading to subtle semantic differences across hardware platforms.\c
 mechanize precise, machine-checked definitions of IEEE-floating point in Lean.
 This will result in a new floating point mechanization, along with a bitblaster that is integrated with Lean's existing
 bitvector library.
-This project will use algorithms built on SymFPU,\cite{symfpu} a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
+This project will use algorithms inspired by SymFPU,\cite{symfpu} a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
 to translate floating point into fixed-point operations,
 followed by an encoding of fixed-point operations into bit-vectors.
 Overall, this project yields an end-to-end verified solver for the floating point bit-blasting pipeline,
