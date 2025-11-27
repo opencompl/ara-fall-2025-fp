@@ -57,8 +57,8 @@ Fast, Mechanized Algorithms for Floating Point Verification}
 % Guidance: https://www.amazon.science/_attachment/ara-proposal-template-2025?id=00000195-aa14-ddc9-ad95-fef5abb90000
 % https://www.hr.admin.cam.ac.uk/files/single_salary_spine_as_at_1_march_2025.pdf
 
-\section{Principal Investigators}
-
+{
+\centering
 \begin{itemize}
   \item \textbf{PI:} Dr. Tobias Grosser, Associate Professor, Computer Laboratory, University of Cambridge
   \item \textbf{Co-PI} Siddharth Bhat, PhD Student, Computer Laboratory, University of Cambridge
@@ -66,8 +66,9 @@ Fast, Mechanized Algorithms for Floating Point Verification}
   \item \textbf{AWS Promotional Credits needed:} \lies{\$255,500}
   \item \textbf{Amazon contact:} Daniel Kroenig, {\texttt{dkr@amazon.co.uk}}
 \end{itemize}
+}
 
-\section{Abstract}
+\section*{Abstract}
 
 Recent deep-learning accelerators adopt ultra-low-precision formats such as
 8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
@@ -127,7 +128,7 @@ thereby enabling trustworthy verification of cutting-edge floating point formats
 
 \paragraph{Floating Point Solvers}
 Solvers for floating point have received a lot of attention,
-as they are a key component of hardware verification
+as they are a key component of hardware verification.
 Floating point verification by bitblasting has proven to be effective in practice,
 with CBMC being one of the first solvers to use this technique.\cite{cbmc,brillout2009mixed}This approach is also adopted by SymFPU, the floating point solver that is used by CVC5 and Bitwuzla
 in order to convert floating point problems into bitblastable SAT problems.
@@ -149,7 +150,7 @@ in order to convert floating point problems into bitblastable SAT problems.
 Our preliminary work provides the essential building blocks for the proposed
 research, focusing on high-assurance foundations for hardware verification
 using formal methods in Lean.
-We have made significant contributions to the Lean bitvector library,
+We have made contributions to the Lean bitvector library,
 implementing circuits necessary for bitblasting fixed-width bitvector operations (e.g., subtraction, multiplication, division, modulo).
 We have also added support for overflow flags by mechanizing efficient overflow detection circuits.\cite{gok2001efficient}
 We are developing a formally verified floating point bitblasting
@@ -161,7 +162,6 @@ and developing an \emph{unverified} bitblasting engine that systematically trans
 FP8/FP4 operations into SAT.
 We have tested that this engine produces the correct floating point encodings by
 performing a golden test against known-good software floating point implementations.
-
 While this provides a working library, it is not certified correct;
 We now aim to verify its correctness end-to-end,
 beyond simply performing testing against known-good implementations.
