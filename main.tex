@@ -75,14 +75,14 @@ Fast, Mechanized Algorithms for Floating Point Verification}
 
 Recent deep-learning accelerators adopt ultra-low-precision formats such as
 8-bit (FP8) and 4-bit (FP4) to trade numerical precision for throughput and
-energy efficiency.\cite{micikevicius2022fp8} Unlike standard IEEE-754
+energy efficiency\cite{micikevicius2022fp8}. Unlike standard IEEE-754
 types, these custom formats (e.g., NVIDIA’s E4M3/E5M2 and the new FP4 variants)
 encode exponent bias, mantissa length, and NaN/infinity representations
-differently, leading to subtle semantic differences across hardware platforms.\cite{kim2025investigation} To support sound verification, we will
+differently, leading to subtle semantic differences across hardware platforms\cite{kim2025investigation}. To support sound verification, we will
 mechanize precise, machine-checked definitions of IEEE-floating point in Lean.
 This will result in a new floating point mechanization, along with a bitblaster that is integrated with Lean's existing
 bitvector library.
-This project will use algorithms inspired by SymFPU,\cite{symfpu} a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
+This project will use algorithms inspired by SymFPU\cite{symfpu}, a state of the art floating point bitblasting approach that is used in CVC5 and Bitwuzla
 to translate floating point into fixed-point operations,
 followed by an encoding of fixed-point operations into bit-vectors.
 Overall, this project yields an end-to-end verified solver for the floating point bit-blasting pipeline,
@@ -109,11 +109,11 @@ and furthermore, the first end-to-end verification of a SymFPU-style floating po
 \paragraph{The Rise of Custom Low-Precision Arithmetic}
 The rapid growth of machine learning and high-performance
 computing has spurred the development of specialized hardware accelerators that
-utilize custom, low-precision floating point formats, such as FP8 \& FP4.\cite{micikevicius2022fp8, kim2025investigation}These formats sometimes
+utilize custom, low-precision floating point formats, such as FP8 \& FP4\cite{micikevicius2022fp8, kim2025investigation}. These formats sometimes
 deviate subtly from the well-established IEEE-754 standard, offering significant gains
 in computational throughput and energy efficiency at the cost of numerical
 precision and introducing subtle semantic variations.
-For example, the E4M3 format does not represent infinities,\cite{micikevicius2022fp8}
+For example, the E4M3 format does not represent infinities\cite{micikevicius2022fp8},
 and NaN values have a single bit pattern allowed.
 This allows for seven more magnitudes to be represented (256, 288, 320, 352, 384, 416, 448) compared to an IEEE-754 compliant version ---
 a trade off of compliance for range.
@@ -133,7 +133,8 @@ thereby enabling trustworthy verification of cutting-edge floating point formats
 Solvers for floating point have received a lot of attention,
 as they are a key component of hardware verification.
 Floating point verification by bitblasting has proven to be effective in practice,
-with CBMC being one of the first solvers to use this technique.\cite{cbmc,brillout2009mixed}This approach is also adopted by SymFPU, the floating point solver that is used by CVC5 and Bitwuzla
+with CBMC being one of the first solvers to use this technique\cite{cbmc,brillout2009mixed}.
+This approach is also adopted by SymFPU, the floating point solver that is used by CVC5 and Bitwuzla
 in order to convert floating point problems into bitblastable SAT problems.
 
 
@@ -155,11 +156,11 @@ research, focusing on high-assurance foundations for hardware verification
 using formal methods in Lean.
 We have made contributions to the Lean bitvector library,
 implementing circuits necessary for bitblasting fixed-width bitvector operations (e.g., subtraction, multiplication, division, modulo).
-We have also added support for overflow flags by mechanizing efficient overflow detection circuits.\cite{gok2001efficient}
+We have also added support for overflow flags by mechanizing efficient overflow detection circuits\cite{gok2001efficient}.
 We are developing a formally verified floating point bitblasting
 library for Lean, targeting low-precision formats such as 8-bit (FP8) and
-4-bit (FP4).\cite{fplean} These custom formats, used in modern deep learning accelerators,
-deviate from the standard IEEE-754 and require precise formal semantics.\cite{micikevicius2022fp8, kim2025investigation}
+4-bit (FP4)\cite{fplean}. These custom formats, used in modern deep learning accelerators,
+deviate from the standard IEEE-754 and require precise formal semantics\cite{micikevicius2022fp8, kim2025investigation}.
 Our preliminary work includes mechanizing these semantics
 and developing an \emph{unverified} bitblasting engine that systematically translates
 FP8/FP4 operations into SAT.
