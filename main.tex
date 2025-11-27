@@ -5,20 +5,23 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{pgfgantt}
-% \usepackage[authoryear]{natbib}
+\usepackage[authoryear]{natbib}
 
-\usepackage[style=verbose-note,backend=bibtex,maxcitenames=1]{biblatex}
-\DeclareNameAlias{sortname}{given-family}
-\DeclareNameAlias{default}{given-family}
-\renewcommand*{\bibinitdelim}{\addnbthinspace}
-\addbibresource{references.bib}
+% \usepackage[backend=bibtex]{biblatex}
+% \addbibresource{references.bib}
+
+% \usepackage[style=verbose-note,backend=bibtex,maxcitenames=1]{biblatex}
+% \DeclareNameAlias{sortname}{given-family}
+% \DeclareNameAlias{default}{given-family}
+% \renewcommand*{\bibinitdelim}{\addnbthinspace}
+% \addbibresource{references.bib}
 
 % \bibliographystyle{plainnat}
 \usepackage[english]{babel}
 % redefine \cite to put citations in footnotes
 \let\oldcite\cite
-\renewcommand{\cite}[1]{\footnote{\oldcite{#1}}}
-\newcommand{\citep}{\parencite}
+% \renewcommand{\cite}[1]{\footnote{\oldcite{#1}}}
+% \newcommand{\citep}{\parencite}
 
 \hypersetup{
     colorlinks = true, % Enable colored links
@@ -254,6 +257,9 @@ tactic extension of \bvdecide{} to enable floating point reasoning natively in L
 \item Total Cash Funding Needed: \lies{£120,000 + £16,000 = £136,000}
 \item EC2 compute credits for SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
 \end{itemize}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
 
 % Siddharth Bhat has experience implementing floating point arithmetic in Lean,
 % as well as mechanizing bitblasting algorithms for fixed point in Lean.
