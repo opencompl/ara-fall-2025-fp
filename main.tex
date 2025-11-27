@@ -51,8 +51,10 @@
 \definecolor{almostwhite}{HTML}{efefef}
 
 
-\title{Toward Certified Machine Learning with\\
-Fast, Mechanized Algorithms for Floating Point Verification}
+\title{Fast, Mechanized Solvers for Floating Point Verification \\
+{\small Modelling cFP8-style datatypes for Amazon Inferentia}
+}
+% \subtitle{Amazon Research Awards Proposal}
 % {Lead: Tobias Grosser, University of Cambridge}}
 \date{\vspace{-5ex}}
 \maketitle{}
@@ -76,7 +78,7 @@ Fast, Mechanized Algorithms for Floating Point Verification}
 Recent deep-learning accelerators adopt ultra-low-precision formats such as
 4-bit (FP4) and 8-bit (FP8) floating point to trade numerical precision for throughput and
 energy efficiency. Unlike standard IEEE-754
-types, these custom formats (e.g., NVIDIA’s E4M3/E5M2 and the new FP4 variants)
+types, these custom formats (e.g., NVIDIA’s E4M3/E5M2 and the new cFP8 variants in Inferentia)
 encode exponent bias, mantissa length, and NaN/infinity representations
 differently, leading to subtle semantic differences across hardware platforms.
 To support sound verification, we will mechanize precise, machine-checked definitions of IEEE-floating point in Lean.
@@ -260,29 +262,31 @@ tactic extension of \bvdecide{} to enable floating point reasoning natively in L
 Amazon's Inferentia Chip supports FP16, BF16, and INT8 data types and the latest
 Inferentia2 adds support for FP32, TF32, and the new configurable FP8 (cFP8)
 data type to provide developers more flexibility to optimize performance and
-accuracy. Furthemore,  AWS Neuron takes high-precision FP32 models and
-automatically casts them to lower-precision data types while optimizing accuracy
-and performance. Support for modeling this reasoning about these diverse sets of 
-floating point formats paired wit
-
-
-% \includegraphics{images/image.png}
-
-Inferentia's cFP8 allows configuratable exponent and mantissa ranges,
+accuracy. Inferentia's format (cFP8) allows configurable exponent and mantissa ranges,
 which precisely matches the design of our library, where our proofs are 
-
 parametric over the choice of exponent and mantissa sizes.
+Furthermore,  AWS Neuron takes high-precision FP32 models and
+automatically casts them to lower-precision data types while optimizing accuracy
+and performance. Support for reasoning with diverse sets of 
+floating point formats paired with verified bitblasting will provide the foundations
+for formally modelling the semantics of the Inferentia ISA, and sets the stage for verified
+optimizing compilers for machine learning workloads that target Inferentia hardware.
 
 
 
 \section{Funds Needed}
 
 \begin{itemize}
-\item Postdoctoral Researcher, 12 months, \lies{£120,000} % 60k *  2(uni overhead) = 120k 
-\item Travel Budget: 2x international conference, \lies{£8,000} $\ast$ 2 = \lies{£16,000} 
+\item Postdoctoral Researcher, 12 months, \lies{£120,000}. \\   % 60k *  2(uni overhead) = 120k
+  (Developing mechanized proofs for relating fixed-to-floating point operations,
+  mechanizing IEEE 754 spec.) 
+\item Research Engineer, 12 months, \lies{£120,000}. \\   % 60k *  2(uni overhead) = 120k
+  (Refactoring library to enable easy-extensibility for custom formats, performance tuning, potential integration with upstream projects, e.g., Lean, Sail4Lean.) 
+  \item Travel Budget: 2x international conference, \lies{£8,000} $\ast$ 2 = \lies{£16,000} 
 \item Total Cash Funding Needed: \lies{£120,000 + £16,000 = £136,000}
 \item EC2 compute credits for SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 365 days = \$255,500
 \end{itemize}
+
 
 \bibliographystyle{unsrt}
 \bibliography{references}
