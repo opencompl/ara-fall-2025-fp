@@ -191,15 +191,14 @@ Lean has begun to develop a theory of dyadic rationals,\footnote{\url{https://gi
 which serve as the mathematical foundation for fixed-point representations.
 We will build on this theory to define fixed-point operations for all IEEE-754 operations,
 including division and square root.
-Furthermore, development is necessary to define rounding modes correctly,
-and to get a representation of floating point rounding modes in terms of fixed point.
+We will also develop necessary theory to define rounding modes correctly.
 
 \paragraph{Verified Circuits for Fixed-Point Arithmetic.}
 Building on the existing bitvector library in Lean,
 we will mechanize the circuits that encode fixed-point arithmetic as bit-vectors.
 Fixed point operations that mirror floating point operations (e.g., addition, subtraction, multiplication, and division)
 will be implemented as bitvector circuits.
-Each operation will be accompanied by proofs of correctness,
+Each operation will be accompanied by correctness proofs,
 showing that the bitvector circuit correctly implements fixed-point semantics.
 
 \paragraph{Reduction from Floating Point to Fixed Point.}
@@ -208,7 +207,7 @@ we will mechanize the floating point semantics as a preprocessor that handles
 NaN/infinity cases, normalizes denormal numbers, and reduces floating point operations
 to fixed-point operations. 
 Following this, we will use the mechanization of fixed-point arithmetic to complete the bitblasting pipeline.
-The most complex step in this stage is the careful handling of rounding (e.g., division and square root needs nontrivial bounds).
+% The most complex step in this stage is the careful handling of rounding (e.g., division and square root needs nontrivial bounds).
 
 \paragraph{Integration with \bvdecide{} and \leanwuzla{}}
 Finally, we will integrate all of these components,
@@ -263,7 +262,7 @@ and our core floating point mechanization as a separate Lean library.
 We are glad to propose our code upstream once our mechanization is mature.
 
 \section{Impact on Amazon Science}
-
+M
 Amazon's Inferentia Chip supports FP16, BF16, and INT8 data types and the latest
 Inferentia2 adds support for FP32, TF32, and the new configurable FP8 (cFP8)
 data type to provide developers more flexibility to optimize performance and
@@ -292,6 +291,9 @@ against the Neuron SDK's floating point implementations.
 \item Travel Budget: 4x international conference, £6,000 $\ast$ 2 = £12,000 
 \item Total Cash Funding Needed: £163,514 + £12,000 = £175,514
 \item EC2 compute credits for SMT-LIB benchmarks (\texttt{u7i-8tb.112xlarge}): \$98/hr * 7 hr * 24 days = \$16,464
+  % https://instances.vantage.sh/aws/ec2/trn1.2xlarge?currency=USD&duration=daily
+\item EC2 compute credits for FP Golden Testing (\texttt{trn1.2xlarge}): \$21.50/hr * 7 hr * 28 days = \$4214
+\item Total EC2 Compute Credits Needed: \$16,464 + \$4,214 = \$20,678
 \end{itemize}
 
 
