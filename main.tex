@@ -258,6 +258,9 @@ theory that is being built in Lean core,
 floating point bitblasting pipeline for floating point.
 Finally we will also package all of these into an executable extension of \leanwuzla{} and a 
 tactic extension of \bvdecide{} to enable floating point reasoning natively in Lean.
+We will develop our floating point verification as forks of \bvdecide{} and \leanwuzla{}, 
+and our core floating point mechanization as a separate Lean library.
+We are glad to propose our code upstream once our mechanization is mature.
 
 \section{Impact on Amazon Science}
 
@@ -273,8 +276,10 @@ and performance. Support for reasoning with diverse sets of
 floating point formats paired with verified bitblasting will provide the foundations
 for formally modelling the semantics of the Inferentia ISA, and sets the stage for verified
 optimizing compilers for machine learning workloads that target Inferentia hardware.
-
-
+We do not have experience with using Amazon's Trainium and Inferentia chips,
+and we do not have experience with the Neuron SDK. We would be excited to explore
+the floating point units supported in these chips, and to run golden testing of our floating point models
+against the Neuron SDK's floating point implementations.
 
 \section{Funds Needed}
 
